@@ -13,5 +13,5 @@ note: this is intended to be used to process dataset/train and dataset/valid SEP
 ![image](https://user-images.githubusercontent.com/99069711/226150149-ce471813-a9e3-4e5c-a4e8-2282c8425c58.png)
 notes: 
   - don't use select ckpt with the 'train from scratch' option
-  - activate tensorboard does nothing if you don't have tensorboard set up(which i don't know anything about, this was added by request and is still untested)
+  - 'enable tensorboard' does nothing if you don't have tensorboard set up(which i don't know anything about, this was added by request and is still untested)
   - it doesn't report steps through the command line for some reason, just use wandb/tensorboard to check that (if you can't use either, it still gives that pickle error at every checkpoint)
