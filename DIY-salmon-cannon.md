@@ -9,8 +9,11 @@ you have it. open it.
 where did you leave that thing anyways?
 #### likely locations: 
 C:\ProgramData\Anaconda3 
+
 C:\ProgramData\miniconda3
+
 C:\Users\\(username)\\.conda
+
 if it's not in any of those places, idk what to tell you. good luck.
 
 ## 3. locate Fish
