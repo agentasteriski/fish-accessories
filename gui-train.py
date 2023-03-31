@@ -14,6 +14,14 @@ class MyGUI:
         self.label = tk.Label(master, text="Select an option:")
         self.label.pack()
 
+        self.script_options = [("Diffusion", "tools/diffusion/train.py"), ("Hifisinger", "tools/hifisinger/train.py")]
+        self.selected_script = tk.StringVar()
+        self.selected_script.set(self.script_options[0][1])
+
+        for option, script_path in self.script_options:
+            script_button = tk.Radiobutton(master, text=option, variable=self.selected_script, value=script_path)
+            script_button.pack()
+
         self.options = ["Train from scratch", "Pretrain", "Resume"]
         self.selected_option = tk.StringVar()
         self.selected_option.set(self.options[0])
@@ -47,6 +55,13 @@ class MyGUI:
         self.label.config(text="Checkpoint selected!")
 
     def execute_command(self):
+        script_path = self.selected_script.get()
+        if script_path == "tools/diffusion/train.py":
+            script_name = "diffusion"
+        elif script_path == "tools/hifisinger/train.py":
+            script_name = "hifisinger"
+        else:
+            raise ValueError("Invalid script path")
         if not configpath:
             self.label.config(text="Please select your config first!")
             return
