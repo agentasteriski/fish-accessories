@@ -77,7 +77,7 @@ class MyGUI:
             self.resume_var.set(False)
 
         # Construct the command
-        cmd = ['python', 'tools/diffusion/train.py', '--config', configpath]
+        cmd = ['python', script_path, '--config', configpath]
         if self.pretrain_var.get() == True:
             cmd.append('--pretrained')
         if self.resume_var.get() == True:
