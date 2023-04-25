@@ -5,6 +5,7 @@ tools for use with fish-diffusion
 ## tool list
 1. gui-preprocess.py
 2. gui-train.py
+3. gui-inference.py
 
 ## 1. gui-preprocess.py
 ![image](https://user-images.githubusercontent.com/99069711/226149835-1dccd68a-c01e-4a1d-818f-5545c4c79ed9.png)
