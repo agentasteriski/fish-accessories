@@ -43,8 +43,9 @@ class MyGUI:
 
 
         ##INTERVAL##
-        self.label = tk.Label(master, text="Render speed:")
-        self.label.pack()
+        self.speed_var = tk.BooleanVar()
+        self.speed_checkbox = tk.Checkbutton(master, text="Enable sampler interval", variable=self.speed_var)
+        self.speed_checkbox.pack()
         
         self.speedenter = tk.Entry(master, textvariable=tk.StringVar(value="20"))
         self.speedenter.pack()
@@ -105,7 +106,10 @@ class MyGUI:
 
 
         # Construct the command
-        cmd = ['python', script_path, '--config', cnfg_path, '--checkpoint', ckpt_path, '--input', input_path, '--output', export_path, '--speaker', speaker, '--pitch_adjust', key, '--sampler_interval', speed]
+        cmd = ['python', script_path, '--config', cnfg_path, '--checkpoint', ckpt_path, '--input', input_path, '--output', export_path, '--speaker', speaker, '--pitch_adjust', key]
+        if self.speed_var.get():
+            cmd.append('--sampler_interval')
+            cmd.append(speed)
         print(' '.join(cmd))
         output = subprocess.check_output(cmd, universal_newlines=True)
         print(output)
