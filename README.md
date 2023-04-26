@@ -1,5 +1,5 @@
 # fish-accessories
-tools for use with fish-diffusion
+tools for use with fish-diffusion. place in fish-diffusion-main and write significantly less command line!
 
 
 ## tool list
