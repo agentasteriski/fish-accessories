@@ -8,12 +8,11 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("350x350")
+        self.geometry("350x425")
         self.title("FISHUAL INTERFACE")
         self.create_widgets()
 
         sv_ttk.set_theme("dark")
-
         
     def create_widgets(self):
 
@@ -36,7 +35,9 @@ class App(tk.Tk):
         tab1.label.pack()
         tab1.label = ttk.Label(tab1, text ="A GUI for Fish Diffusion")
         tab1.label.pack()
-        tab1.label = ttk.Label(tab1, text ="by AgentAsteriski, 2023")
+        tab1.label = ttk.Label(tab1, text ="by AgentAsteriski")
+        tab1.label.pack()
+        tab1.label = ttk.Label(tab1, text ="updated 5/23/23")
         tab1.label.pack()
 
         
@@ -95,8 +96,6 @@ class App(tk.Tk):
         ttk.Button(tab3, text="Begin training", command=self.execute_command_train).grid(row = 5, columnspan = 2, padx = 5, pady = 5)
 
         #INFERENCE TAB
-        tab2.columnconfigure(0, weight=1)
-        tab2.columnconfigure(1, weight=1)
 
         ##Button to select ckpt AND config
         ttk.Button(tab4, text="Select model", command=self.load_model_function).grid(row = 0, columnspan = 2, padx = 5, pady = 5)
@@ -105,7 +104,7 @@ class App(tk.Tk):
         ttk.Label(tab4, text="Select an option:").grid(row = 1, column = 0, rowspan = 2, padx=5, pady=5)
         global script_option_inf
         script_option_inf = tk.StringVar()
-        option1 = ttk.Radiobutton(tab4, text="Diffusion", variable=script_option_inf, value="tools/diffusion/inference.py")
+        option1 = ttk.Radiobutton(tab4, text="Diffusion/Denoiser", variable=script_option_inf, value="tools/diffusion/inference.py")
         option1.grid(row = 1, column = 1, padx = 5, pady = 5)
         option2 = ttk.Radiobutton(tab4, text="Hifisinger", variable=script_option_inf, value="tools/hifisinger/inference.py")
         option2.grid(row = 2, column = 1, padx = 5, pady = 5)
@@ -137,12 +136,36 @@ class App(tk.Tk):
         tab4.speedenter.insert(0, "20")
         tab4.speedenter.grid(row = 5, column = 1, sticky = tk.E, padx=5, pady=5)
 
+        ##Select pitch extractor
+        self.selected_option2 = tk.StringVar()
+
+        self.option_menu = ttk.Combobox(tab4, textvariable = self.selected_option2)  
+        self.option_menu['values'] = ["config default", "Crepe", "Parselmouth", "Harvest", "Dio", "Pyin"]
+        self.option_menu['state'] = 'readonly'
+        self.crepe_var = tk.BooleanVar()
+        self.parsel_var = tk.BooleanVar()
+        self.harvest_var = tk.BooleanVar()
+        self.dio_var = tk.BooleanVar()
+        self.pyin_var = tk.BooleanVar()
+        self.option_menu.grid(row = 7, columnspan = 2, padx = 5, pady = 5)
+
+        ##Checkbox to enable sampler skip_steps - DENOISER ONLY
+        self.denoise_var = tk.BooleanVar()
+        tab4.denoise_checkbox = ttk.Checkbutton(tab4, text="(DENOISER) skip_steps", variable=self.denoise_var)
+        tab4.denoise_checkbox.grid(row = 6, column = 0, sticky = tk.W, padx=5, pady=5)
+        ##Enter sampler interval/render speed - default 20
+        global denoiseval
+        denoiseval = tk.Entry(tab4)
+        tab4.denoiseenter = denoiseval
+        tab4.denoiseenter.insert(0, "970")
+        tab4.denoiseenter.grid(row = 6, column = 1, sticky = tk.E, padx=5, pady=5)
+
         ##Import/save buttons
-        ttk.Button(tab4, text="Select input audio", command=self.load_input_function).grid(row = 6, column = 0, padx=5, pady=5)
-        ttk.Button(tab4, text="Select export location", command=self.load_export_function).grid(row = 6, column = 1, padx=5, pady=5)
+        ttk.Button(tab4, text="Select input audio", command=self.load_input_function).grid(row = 8, column = 0, padx=5, pady=5)
+        ttk.Button(tab4, text="Select export location", command=self.load_export_function).grid(row = 8, column = 1, padx=5, pady=5)
 
         ##Button to start inference
-        ttk.Button(tab4, text="Inference", command=self.execute_command_inf).grid(row = 7, columnspan = 2, padx=5, pady=5)
+        ttk.Button(tab4, text="Inference", command=self.execute_command_inf).grid(row = 9, columnspan = 2, padx=5, pady=5)
 
 
     #define functions
@@ -249,11 +272,64 @@ class App(tk.Tk):
         speaker = speakerenter.get()
         key = keyenter.get()
         speed = speedval.get()
+        denoise = denoiseval.get()
+        selected_option2 = self.selected_option2.get()
+        if selected_option2 == "Crepe":
+            self.crepe_var.set(True)
+            self.parsel_var.set(False)
+            self.harvest_var.set(False)
+            self.dio_var.set(False)
+            self.pyin_var.set(False)
+        elif selected_option2 == "Parselmouth":
+            self.crepe_var.set(False)
+            self.parsel_var.set(True)
+            self.harvest_var.set(False)
+            self.dio_var.set(False)
+            self.pyin_var.set(False)
+        elif selected_option2 == "Harvest":
+            self.crepe_var.set(False)
+            self.parsel_var.set(False)
+            self.harvest_var.set(True)
+            self.dio_var.set(False)
+            self.pyin_var.set(False)
+        elif selected_option2 == "Dio":
+            self.crepe_var.set(False)
+            self.parsel_var.set(False)
+            self.harvest_var.set(False)
+            self.dio_var.set(True)
+            self.pyin_var.set(False)
+        elif selected_option2 == "Pyin":
+            self.crepe_var.set(False)
+            self.parsel_var.set(False)
+            self.harvest_var.set(False)
+            self.dio_var.set(False)
+            self.pyin_var.set(True)
+        else:
+            self.crepe_var.set(False)
+            self.parsel_var.set(False)
+            self.harvest_var.set(False)
+            self.dio_var.set(False)
+            self.pyin_var.set(False)
         # Construct the command
         cmd = ['python', script, '--config', cnfg_path, '--checkpoint', ckpt_path, '--input', input_path, '--output', export_path, '--speaker', speaker, '--pitch_adjust', key]
         if self.speed_var.get():
             cmd.append('--sampler_interval')
             cmd.append(speed)
+        if self.denoise_var.get():
+            cmd.append('--skip_steps')
+            cmd.append(denoise)
+        if self.crepe_var.get() == True or self.parsel_var.get() == True or self.harvest_var.get() == True or self.dio_var.get() == True or self.pyin_var.get() == True:
+            cmd.append('--pitch_extractor')
+        if self.crepe_var.get() == True:
+            cmd.append('CrepePitchExtractor')
+        if self.parsel_var.get() == True:
+            cmd.append('ParselMouthPitchExtractor')
+        if self.harvest_var.get() == True:
+            cmd.append('HarvestPitchExtractor')
+        if self.dio_var.get() == True:
+            cmd.append('DioPitchExtractor')
+        if self.pyin_var.get() == True:
+            cmd.append('PyinPitchExtractor')
         print(' '.join(cmd))
         output = subprocess.check_output(cmd, universal_newlines=True)
         print(output)
