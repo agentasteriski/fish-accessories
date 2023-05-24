@@ -29,7 +29,7 @@ notes:
   - variables currently unavailable are speaker_mapping and pitches_path due to question of use. if you would like to see these implemented, please let me know
 
 ## 4. fishual.py
-![image](https://github.com/agentasteriski/fish-accessories/assets/99069711/4aae6bc9-9717-4cce-94d4-33dce9c8a2cf) ![image](https://github.com/agentasteriski/fish-accessories/assets/99069711/c36e225c-ef76-4e84-9ec0-aa380c23d2bf) ![image](https://github.com/agentasteriski/fish-accessories/assets/99069711/7795c4af-fa7a-4e7d-a82b-b481aa92e956)
+![image](https://github.com/agentasteriski/fish-accessories/assets/99069711/4aae6bc9-9717-4cce-94d4-33dce9c8a2cf) ![image](https://github.com/agentasteriski/fish-accessories/assets/99069711/c36e225c-ef76-4e84-9ec0-aa380c23d2bf) ![image](https://github.com/agentasteriski/fish-accessories/assets/99069711/4fe4c6bb-b140-4afe-bcb2-9413e8a6e072)
 
 all of the above combined into one easy multi-tab GUI with cleaner layouts. recommended over the standalone versions.
 
